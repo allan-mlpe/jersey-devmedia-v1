@@ -124,4 +124,90 @@ public class NotaDAO {
 		
 		return nota;
 	}
+	
+	/**
+	 * Adiciona uma nota nota no banco de dados
+	 * @param nota objeto nota que representa a nota que será adicionada ao banco de dados
+	 */
+	public void adicionarNota(Nota nota) {
+		try {
+			String sql = "INSERT INTO nota(TITULO, DESCRICAO) VALUES(?, ?)";
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, nota.getTitulo());
+			st.setString(2, nota.getDescricao());
+			
+			st.executeQuery();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if(con != null) {
+				try {
+					con.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Exclui uma nota do banco de dados
+	 * @param id ID da nota que será excluída
+	 */
+	public void excluirNota(Integer id) {
+		try {
+			String sql = "DELETE FROM nota WHERE ID_NOTA = ?";
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, id);
+			
+			st.executeQuery();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if(con != null) {
+				try {
+					con.close();
+					
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Atualiza uma nota do banco de dados
+	 * @param nota objeto nota que representa a nota que será atualizada
+	 */
+	public void atualizarNota(Nota nota) {
+		try {
+			String sql = "UPDATE nota SET TITULO = ?, DESCRICAO = ? WHERE ID_NOTA = ? ";
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, nota.getTitulo());
+			st.setString(2, nota.getDescricao());
+			st.setInt(3, nota.getId());
+			
+			st.executeQuery();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			if(con != null) {
+				try {
+					con.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+					
+				}
+			}
+		}
+	}
 }
