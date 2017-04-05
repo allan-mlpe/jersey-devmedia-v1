@@ -51,6 +51,15 @@
   		<version>2.22.1</version>
   	</dependency>
   	
+  	<!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
+  	<!-- Contém as dependências necessárias para o jersey, como o Path, GET, POST, etc. -->
+	<dependency>
+	    <groupId>javax.ws.rs</groupId>
+	    <artifactId>javax.ws.rs-api</artifactId>
+	    <version>2.1-m05</version>
+	</dependency>
+	  	
+  	
   	<!-- 
   		Dependência obrigatória, pois o maven utiliza classes desse pacote
   	 -->
