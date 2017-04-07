@@ -1,6 +1,6 @@
 package br.edu.devmedia.utils;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -25,8 +25,9 @@ public class LoadProperties {
 	 */
 	private LoadProperties() {
 		prop = new Properties();
-		try {
-			FileInputStream fis = new FileInputStream("WebContent/WEB-INF/db.properties");
+		try {			
+			InputStream fis = getClass().getClassLoader().getResourceAsStream("db.properties");
+
 			prop.load(fis);
 			fis.close();
 		} catch(Exception e) {
