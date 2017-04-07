@@ -38,7 +38,7 @@ public class NotaService {
 	@GET //método da requisição HTTP aceito pelo serviço
 	@Path("/") //path do serviço
 	@Produces(MediaType.APPLICATION_JSON) //tipo de dado retornado pelo serviço
-	private List<Nota> listarNotas() {
+	public List<Nota> listarNotas() {
 		List<Nota> notas = dao.listarNotas();
 		return notas;
 	}
