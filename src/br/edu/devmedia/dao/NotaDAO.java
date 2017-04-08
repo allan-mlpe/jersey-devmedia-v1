@@ -116,7 +116,7 @@ public class NotaDAO {
 		st.setString(1, nota.getTitulo());
 		st.setString(2, nota.getDescricao());
 
-		st.executeQuery();
+		st.execute();
 
 	}
 
@@ -133,7 +133,7 @@ public class NotaDAO {
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1, id);
 
-		st.executeQuery();
+		st.execute();
 
 	}
 
@@ -151,7 +151,7 @@ public class NotaDAO {
 		st.setString(2, nota.getDescricao());
 		st.setInt(3, nota.getId());
 
-		st.executeQuery();
+		st.execute();
 
 	}
 }
