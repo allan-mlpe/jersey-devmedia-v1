@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
+
+
 import br.edu.devmedia.utils.LoadProperties;
 
 /**
@@ -71,11 +73,12 @@ public class DatabaseConnectionFactory {
 	 * @return conexão com o banco de dados da aplicação
 	 * 
 	 */
-	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	public static Connection getConnection() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
 		if(connection == null) {
 			
 			//declaração explícita sobre qual classe deve ser usada pelo driver para gerenciar a conexão com o banco
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			
 			connection = DriverManager.getConnection(getMySQLConnectionUrl(), user, password);
 		}
@@ -88,6 +91,6 @@ public class DatabaseConnectionFactory {
 	 * @return URL de conexão ao banco de dados
 	 */
 	public static String getMySQLConnectionUrl() {
-		return "jdbc:mysql//" + host + ":" + port + "/" + databaseName;
+		return "jdbc:mysql://" + host + ":" + port + "/" + databaseName;
 	}
 }
