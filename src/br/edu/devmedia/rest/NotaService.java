@@ -1,12 +1,21 @@
 package br.edu.devmedia.rest;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import br.edu.devmedia.dao.NotaDAO;
 import br.edu.devmedia.model.Nota;
@@ -36,10 +45,116 @@ public class NotaService {
 	}
 	
 	@GET //método da requisição HTTP aceito pelo serviço
-	@Path("/") //path do serviço
+	//@Path("/") //path do serviço
 	@Produces(MediaType.APPLICATION_JSON) //tipo de dado retornado pelo serviço
-	public List<Nota> listarNotas() {
-		List<Nota> notas = dao.listarNotas();
-		return notas;
+	public Response listarNotas() {
+		List<Nota> notas = null;
+		try {
+			notas = dao.listarNotas();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 
+					Response.status(Response.Status.NOT_FOUND)
+					.type(MediaType.TEXT_PLAIN)
+					.entity("Resource not found")
+					.build();
+		}
+		
+		/*
+		 * É necessário usar a classe GenericEntity porque o Jersey não consegue
+		 * converter listas como ArrayList ou Vector nativamente.
+		 */
+		GenericEntity<List<Nota>> genericListObject = new GenericEntity<List<Nota>>(notas) {};
+		
+		return Response.ok().entity(genericListObject).build();
+	}
+	
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarNotaPorId(@PathParam("id") int id) {
+		Nota nota = null;
+		
+		try {
+			nota = dao.buscarNotaPorId(id);
+			
+			if(nota == null) 
+				return 
+					Response.status(Response.Status.NOT_FOUND)
+					.type(MediaType.TEXT_PLAIN)
+					.entity("Resource not found")
+					.build();
+										
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+			return 
+					Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.TEXT_PLAIN)
+					.entity("Internal server error")
+					.build();
+		}
+		
+		
+		return Response.ok().entity(nota).build();
+	}
+	
+	@POST //usamos o POST para inserir um recurso no servidor
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response adicionarNota(@Valid Nota nota) {
+		try {
+			dao.adicionarNota(nota);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			return
+					Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.TEXT_PLAIN)
+					.entity("Internal server error")
+					.build();
+		}
+		
+		return Response.status(Response.Status.CREATED).build();
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response atualizarNota(Nota nota) {
+		try {
+			dao.atualizarNota(nota);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return
+					Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.TEXT_PLAIN)
+					.entity("Internal server error")
+					.build();
+		}
+		
+		return null;
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public Response deletarNota(@PathParam("id") int id) {
+		try {
+			dao.excluirNota(id);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+			return
+					Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.TEXT_PLAIN)
+					.entity("Internal server error")
+					.build();
+		}
+		
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }

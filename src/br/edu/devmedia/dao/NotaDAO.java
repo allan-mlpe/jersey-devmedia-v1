@@ -82,7 +82,7 @@ public class NotaDAO {
 	public Nota buscarNotaPorId(Integer id) throws SQLException {
 		Nota nota = null;
 
-		String sqlQuery = "SELECT * FROM nota WHERE id=?";
+		String sqlQuery = "SELECT * FROM nota WHERE id_nota=?";
 
 		PreparedStatement st = con.prepareStatement(sqlQuery);
 
