@@ -80,10 +80,12 @@ public class NotaService {
 			
 			if(nota == null) 
 				return 
-					Response.status(Response.Status.NOT_FOUND)
+					Response.status(Response.Status.NO_CONTENT)
+					.build();
+					/*Response.status(Response.Status.NOT_FOUND)
 					.type(MediaType.TEXT_PLAIN)
 					.entity("Resource not found")
-					.build();
+					.build();*/
 										
 			
 		} catch(Exception e) {
@@ -120,12 +122,14 @@ public class NotaService {
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
-	@PUT
+	@PUT //usamos o PUT para fazer atualizações de recursos no servidor
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response atualizarNota(Nota nota) {
+	//além do parâmetro na URL, enviamos também a nota
+	public Response atualizarNota(Nota nota, @PathParam("id") int id) {
 		try {
-			dao.atualizarNota(nota);
+			dao.atualizarNota(nota, id);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -136,7 +140,7 @@ public class NotaService {
 					.build();
 		}
 		
-		return null;
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 	
 	@DELETE
