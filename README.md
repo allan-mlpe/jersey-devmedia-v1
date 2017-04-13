@@ -10,3 +10,4 @@ Projeto da primeira versão do curso de Jersey da devmedia.
 - Aula 07 - Implementando o serviço de atualização de notas
 - Aula 08 - Implementando o serviço de exclusão de notas
 - Aula 09 - Configurando a codificação de caractares das requisições para UTF-8
+- Aula 10 - Atualizando a API para retornar os dados auto-gerados (ID) após a inserção das notas na base de dados
