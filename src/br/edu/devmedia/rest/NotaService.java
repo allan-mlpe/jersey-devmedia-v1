@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -110,9 +109,10 @@ public class NotaService {
 	@POST //usamos o POST para inserir um recurso no servidor
 	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response adicionarNota(@Valid Nota nota) {
+	public Response adicionarNota(Nota nota) {
+		int idGerado = 0;
 		try {
-			dao.adicionarNota(nota);
+			idGerado = dao.adicionarNota(nota);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,7 +124,10 @@ public class NotaService {
 					.build();
 		}
 		
-		return Response.status(Response.Status.CREATED).build();
+		return Response.status(Response.Status.CREATED)
+				.type(MediaType.TEXT_PLAIN)
+				.entity(idGerado)
+				.build();
 	}
 	
 	@PUT //usamos o PUT para fazer atualizações de recursos no servidor

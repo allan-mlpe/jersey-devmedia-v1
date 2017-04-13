@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Vector;
 
@@ -108,16 +109,25 @@ public class NotaDAO {
 	 *            objeto nota que representa a nota que será adicionada ao banco
 	 *            de dados
 	 */
-	public void adicionarNota(Nota nota) throws SQLException {
-
+	public int adicionarNota(Nota nota) throws SQLException {
+		int idGerado = 0;
 		String sql = "INSERT INTO nota(TITULO, DESCRICAO) VALUES(?, ?)";
-
-		PreparedStatement st = con.prepareStatement(sql);
+		
+		//prepara a statement para retornar os dados auto-gerados (ID) após a execução
+		PreparedStatement st = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		st.setString(1, nota.getTitulo());
 		st.setString(2, nota.getDescricao());
 
 		st.execute();
-
+		
+		ResultSet rs = st.getGeneratedKeys();
+		if(rs.next()) {
+			
+			//retorna a única linha que contém o resultado
+			idGerado = rs.getInt(1);
+		}
+		
+		return idGerado;
 	}
 
 	/**
