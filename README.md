@@ -9,3 +9,4 @@ Projeto da primeira versão do curso de Jersey da devmedia.
 - Aula 06 - Implementando os serviços de busca por ID e inserção
 - Aula 07 - Implementando o serviço de atualização de notas
 - Aula 08 - Implementando o serviço de exclusão de notas
+- Aula 09 - Configurando a codificação de caractares das requisições para UTF-8
