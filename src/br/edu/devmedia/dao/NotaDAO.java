@@ -143,13 +143,13 @@ public class NotaDAO {
 	 * @param nota
 	 *            objeto nota que representa a nota que será atualizada
 	 */
-	public void atualizarNota(Nota nota) throws SQLException {
+	public void atualizarNota(Nota nota, int id) throws SQLException {
 		String sql = "UPDATE nota SET TITULO = ?, DESCRICAO = ? WHERE ID_NOTA = ? ";
 
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setString(1, nota.getTitulo());
 		st.setString(2, nota.getDescricao());
-		st.setInt(3, nota.getId());
+		st.setInt(3, id);
 
 		st.execute();
 
