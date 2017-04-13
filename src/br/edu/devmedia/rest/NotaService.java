@@ -35,6 +35,11 @@ public class NotaService {
 	private NotaDAO dao; 
 	
 	/**
+	 * Constante que será usada para definir o padrão de codificação dos serviços para UTF-8
+	 */
+	private static final String CHARSET_UTF8 = ";charset=utf-8";
+	
+	/**
 	 * Método executado quando da criação do objeto. A annotation "@PostConstruct" é utilizada
 	 * para evitar a utilização de um construtor, uma vez que é o Jersey que irá gerenciar
 	 * a criação dos objetos de serviços da aplicação.
@@ -103,7 +108,7 @@ public class NotaService {
 	}
 	
 	@POST //usamos o POST para inserir um recurso no servidor
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response adicionarNota(@Valid Nota nota) {
 		try {
@@ -124,7 +129,7 @@ public class NotaService {
 	
 	@PUT //usamos o PUT para fazer atualizações de recursos no servidor
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON + CHARSET_UTF8)
 	@Produces(MediaType.TEXT_PLAIN)
 	//além do parâmetro na URL, enviamos também a nota
 	public Response atualizarNota(Nota nota, @PathParam("id") int id) {
