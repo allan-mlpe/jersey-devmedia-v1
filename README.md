@@ -6,4 +6,6 @@ Projeto da primeira versão do curso de Jersey da devmedia.
 - Aula 03 - Implementando a conexão com o banco de dados e os métodos de listar notas busca por ID
 - Aula 04 - Criando os métodos de inserção, exclusão e atualização de notas
 - Aula 05 - Implementando o serviço de listagem de notas
-- Aula 06 - Implementando os serviços de busca por ID, inserção, exclusão e atualização
+- Aula 06 - Implementando os serviços de busca por ID e inserção
+- Aula 07 - Implementando o serviço de atualização de notas
+- Aula 08 - Implementando o serviço de exclusão de notas
