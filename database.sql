@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `db_notas2`;
+CREATE DATABASE IF NOT EXISTS `db_notas`;
 USE `db_notas`;
 
 CREATE TABLE `nota` (
